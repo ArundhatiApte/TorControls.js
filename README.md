@@ -31,7 +31,7 @@ const torControls = createTorControls({
 
 ### Links
 
-- [API documentation](#doc/API.ru.md)
+- [API documentation](doc/API.md)
 - [TOR Control specification](https://github.com/torproject/torspec/blob/main/control-spec.txt)
 
 ### License
