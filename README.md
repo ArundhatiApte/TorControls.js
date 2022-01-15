@@ -13,9 +13,8 @@ or
 ```js
 "use strict";
 
-import {createTorControls} from "tor-controls";
-// const {createTorControls} = require(...); // commonJS
-// import {createTorControls} from "TorControls"; // yarn
+import {createTorControls} from "TorControls";
+// const {createTorControls} = require("TorControls"); // commonJS
 
 const torControls = createTorControls({
   host: "localhost",
