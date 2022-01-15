@@ -1,0 +1,11 @@
+{
+  "name": "TorControls",
+  "exports": {
+    "import": "./src/createTorControls.js",
+    "require": "./src/createTorControls.js"
+  },
+  "version": "1.0.0",
+  "dependencies": {
+    "tester": "github:ArundhatiApte/Tester-JS"
+  }
+}
