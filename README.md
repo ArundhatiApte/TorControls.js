@@ -4,9 +4,9 @@ Module for managing TOR service.
 
 ### Installation
 
-`npm install tor-controls`  
+`npm install github:ArundhatiApte/TorControls-JS`  
 or  
-`yarn add tor-controls`
+`yarn add github:ArundhatiApte/TorControls-JS`
 
 ### Example of usage
 
@@ -14,7 +14,7 @@ or
 "use strict";
 
 import {createTorControls} from "tor-controls";
-//const {createTorControls} = require(...); // commonJS
+// const {createTorControls} = require(...); // commonJS
 // import {createTorControls} from "TorControls"; // yarn
 
 const torControls = createTorControls({
@@ -33,7 +33,7 @@ const torControls = createTorControls({
 ### Links
 
 - [API documentation](#doc/API.ru.md)
-- [Спецификация протокола управления TOR](https://github.com/torproject/torspec/blob/main/control-spec.txt)
+- [TOR Control specification](https://github.com/torproject/torspec/blob/main/control-spec.txt)
 
 ### License
 

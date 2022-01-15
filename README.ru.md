@@ -4,9 +4,9 @@
 
 ### Утсановка
 
-`npm install tor-controls`  
+`npm install github:ArundhatiApte/TorControls-JS`  
 или  
-`yarn add tor-controls`
+`yarn add github:ArundhatiApte/TorControls-JS`
 
 ### Пример испоьзования
 
@@ -14,7 +14,7 @@
 "use strict";
 
 import {createTorControls} from "tor-controls";
-//const {createTorControls} = require(...); // commonJS
+// const {createTorControls} = require(...); // commonJS
 // import {createTorControls} from "TorControls"; // yarn
 
 const torControls = createTorControls({
