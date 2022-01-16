@@ -63,4 +63,6 @@ tester.onAllTestsEnded.addListener(function() {
   return torControlsWithPersistentConnection.close();
 });
 
+console.log("Make sure that creds in configForTor.json are valid.");
+
 tester.run();
