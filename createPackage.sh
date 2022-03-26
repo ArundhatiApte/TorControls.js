@@ -1,5 +1,7 @@
 #!/bin/sh
 
+rm TorControls.package.zip
+
 zip -r TorControls.package.zip . \
   -x node_modules/\*\
   -x doc/\*\
