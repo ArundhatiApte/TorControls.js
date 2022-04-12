@@ -6,6 +6,6 @@
   },
   "version": "1.0.0",
   "devDependencies": {
-    "tester": "github:ArundhatiApte/Tester-JS"
+    "tester": "github:ArundhatiApte/Tester.js"
   }
 }

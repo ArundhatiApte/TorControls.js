@@ -14,7 +14,7 @@ or
 "use strict";
 
 import {createTorControls} from "TorControls";
-// const {createTorControls} = require("TorControls"); // commonJS
+// const {createTorControls} = require("TorControls");
 
 const torControls = createTorControls({
   host: "localhost",
