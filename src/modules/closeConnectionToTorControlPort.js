@@ -1,11 +1,9 @@
 "use strict";
 
-const createTimeoutForClosing = function(
-  connection, resolvePromise, maxTimeMSForWaitingClosing
-) {
+const createTimeoutForClosing = function(connection, resolvePromise, maxTimeMsForWaitingClosing) {
   return setTimeout(
     closeConection.bind(null, connection, resolvePromise),
-    maxTimeMSForWaitingClosing  
+    maxTimeMsForWaitingClosing
   );
 };
 
@@ -23,10 +21,10 @@ const resolveTask = function(timeoutForClosing, resolvePromise) {
   resolvePromise();
 };
 
-const closeConnectionToTorControlPort = function(connection, maxTimeMSForWaitingClosing) {
+const closeConnectionToTorControlPort = function(connection, maxTimeMsForWaitingClosing) {
   return new Promise(function(resolve) {
     const timeout = createTimeoutForClosing(
-      connection, resolve, maxTimeMSForWaitingClosing
+      connection, resolve, maxTimeMsForWaitingClosing
     );
     connection.once("end", createResolver(timeout, resolve));
     connection.write("QUIT\r\n");

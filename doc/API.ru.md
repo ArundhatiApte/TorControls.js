@@ -3,7 +3,7 @@
 - [Экспортируемый модуль](#экспортируемый-модуль)
 - [Класс TorControl](#torcontrol)
 - [Класс TorControlResponse](#torcontrolresponse)
-- [Класс TorControlRequestExeption](#torcontrolrequestexeption)
+- [Класс TorControlRequestError](#torcontrolrequestexeption)
 - [Класс PersistentConnectionTorControl](#persistentconnectiontorcontrol)
 - [Класс TempConnectionTorControl](#tempconnectiontorcontrol)
 
@@ -11,7 +11,7 @@
 
 `<Object>`
 - `createTorControls([options])`
-- `TorControlRequestExeption`
+- `TorControlRequestError`
 
 #### createTorControls([options])
 
@@ -25,11 +25,12 @@
     - `port <number>` Порт управления сервисом TOR. По умолчанию 9051.
 - Возвращает `<TorControl>`
 
-### class: TorControlRequestExeption
+### class: TorControlRequestError
 
 - Наследует `<Error>`.
 
 #### message
+
 - `<string>` Ответное сообщение сервиса TOR. Пример: `'552/\r?\n/Unrecognized key "noSuchCommandInSpec"'`.
 
 ### Класс: TorControl
@@ -52,7 +53,7 @@
 - signalUsr2
 
 Каждый метод без параметров, возвращает `<Promise<TorControlResponse>>`.
-Если сервис TOR ответит сообщение с кодом ошибки, метод завершится исключением TorControlRequestExeption.
+Если сервис TOR ответит сообщение с кодом ошибки, метод завершится исключением TorControlRequestError.
 
 #### getConf()
 #### getEvents()
@@ -65,7 +66,7 @@
 - `message <string>` Сообщение, отправляемое сервису TOR.
 - Возвращает `<Promise>`
 
-Частный метод для отправки сообщений сервису TOR. Если сервис TOR ответит сообщение с кодом ошибки, метод завершится исключением TorControlRequestExeption.  
+Частный метод для отправки сообщений сервису TOR. Если сервис TOR ответит сообщение с кодом ошибки, метод завершится исключением TorControlRequestError.  
 Используйте, если нужный метод отсутсвует в классе TorControl.  
 Пример:
 ```js

@@ -3,7 +3,7 @@
 - [exported module](#exported-module)
 - [class TorControl](#torcontrol)
 - [class TorControlResponse](#torcontrolresponse)
-- [class TorControlRequestExeption](#torcontrolrequestexeption)
+- [class TorControlRequestError](#torcontrolrequestexeption)
 - [class PersistentConnectionTorControl](#persistentconnectiontorcontrol)
 - [class TempConnectionTorControl](#tempconnectiontorcontrol)
 
@@ -11,7 +11,7 @@
 
 `<Object>`  
 - `createTorControls([options])`
-- `TorControlRequestExeption`
+- `TorControlRequestError`
 
 #### createTorControls([options])
 
@@ -26,7 +26,7 @@ By default: `false`.
     - `port <number>` Control port. By default: 9051.
 - Returns `<TorControl>`
 
-### class: TorControlRequestExeption
+### class: TorControlRequestError
 
 - Extends `<Error>`.
 
@@ -54,7 +54,7 @@ Provides methods for sending signals and requests to TOR service.
 - signalUsr2
 
 Every method has no argumens, returns `<Promise<TorControlResponse>>`.
-If TOR service send message with error code, `<Promise>` will be rejected with `<TorControlRequestExeption>`.
+If TOR service send message with error code, `<Promise>` will be rejected with `<TorControlRequestError>`.
 
 #### getConf(nameOfProperty)
 
@@ -72,7 +72,7 @@ If TOR service send message with error code, `<Promise>` will be rejected with `
 - Returns `<Promise>`
 
 Private method for sending requests to TOR service.
-If TOR service send message with error code, `<Promise>` will be rejected with `<TorControlRequestExeption>`.  
+If TOR service send message with error code, `<Promise>` will be rejected with `<TorControlRequestError>`.  
 Use this function to implement missing method in TorControl class.
 Example:
 ```js

@@ -14,5 +14,5 @@ const createTorControls = function(config) {
 
 module.exports = {
   createTorControls,
-  TorControlRequestExeption: require("./modules/TorControlRequestExeption")
+  TorControlRequestError: require("./modules/TorControlRequestError")
 }

@@ -2,11 +2,10 @@
 
 Модуль для управления сервисом TOR. 
 
-### Утсановка
+### Установка
 
-`npm install github:ArundhatiApte/TorControls-JS`  
-или  
-`yarn add github:ArundhatiApte/TorControls-JS`
+Скачайте пакет со страницы выпусков. В каталоге вашего проекта установите модуль менеджером пакетов:
+`npm install path/to/TorControls.package.tar.gz`.
 
 ### Пример испоьзования
 

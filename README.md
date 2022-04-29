@@ -4,9 +4,8 @@ Module for managing TOR service.
 
 ### Installation
 
-`npm install github:ArundhatiApte/TorControls-JS`  
-or  
-`yarn add github:ArundhatiApte/TorControls-JS`
+Download package from releases page. In folder of your project install module by pakcage manager:
+`npm install path/to/TorControls.package.tar.gz`.
 
 ### Example of usage
 

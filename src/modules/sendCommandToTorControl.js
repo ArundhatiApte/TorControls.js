@@ -1,6 +1,6 @@
 "use strict";
 
-const TorControlRequestExeption = require("./TorControlRequestExeption");
+const TorControlRequestError = require("./TorControlRequestError");
 
 const sendCommandToTorControl = function(connection, command) {
   return new Promise(function(resolve, reject) {
@@ -11,14 +11,14 @@ const sendCommandToTorControl = function(connection, command) {
 
 const acceptResponse = function(resolvePromise, rejectPromise, response) {
   response = response.toString();
-        
+
   if (is250SuccesCode(response)) {
     return resolvePromise({
       code: 250,
       message: response
-    });    
+    });
   }
-  return rejectPromise(new TorControlRequestExeption(response));
+  return rejectPromise(new TorControlRequestError(response));
 };
 
 const reSuccesResponse = /250/,
