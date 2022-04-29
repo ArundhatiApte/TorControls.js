@@ -4,8 +4,8 @@
     "import": "./src/createTorControls.js",
     "require": "./src/createTorControls.js"
   },
-  "version": "1.0.0",
+  "version": "0.1.0",
   "devDependencies": {
-    "tester": "github:ArundhatiApte/Tester.js"
+    "mocha": "^9.1.2"
   }
 }

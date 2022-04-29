@@ -1,19 +1,11 @@
 "use strict";
 
-const expect = require("assert"),
-      Tester = require("tester");
+const expect = require("assert");
 
 const {
   createTorControls,
-  TorControlRequestExeption
+  TorControlRequestError
 } = require("./../createTorControls");
-      
-const tester = new Tester("testing TorControls"),
-      optionsForConnection = require("./configForTor.json");
-
-const torControlsWithoutPersistentConnection = createTorControls(optionsForConnection);
-optionsForConnection.isPersistent = true;
-const torControlsWithPersistentConnection = createTorControls(optionsForConnection);
 
 const createCheckingSendingSignalsFn = (function() {
   const checkSengingSignals = (function() {
@@ -21,21 +13,21 @@ const createCheckingSendingSignalsFn = (function() {
       "signalClearDNSCache",
       "signalNewNym"
     ];
-    
+
     const checkSengingSignals = async function(torControls) {
       for (const nameOfMethod of namesOfMethods) {
         await checkSendingSignalByMethod(torControls, nameOfMethod);
       }
     };
-  
+
     const checkSendingSignalByMethod = async function(torControls, nameOfMethod) {
       const result = await torControls[nameOfMethod]();
       console.log("result from ", nameOfMethod, " : ", result);
     };
-  
+
     return checkSengingSignals;
   })();
-  
+
   const createCheckingSendingSignalsFn = function(torControls) {
     return checkSengingSignals.bind(null, torControls);
   };
@@ -43,26 +35,20 @@ const createCheckingSendingSignalsFn = (function() {
   return createCheckingSendingSignalsFn;
 })();
 
-tester.addTest(createCheckingSendingSignalsFn(torControlsWithoutPersistentConnection), {
-  name: "testSignals"
+describe("testing TorControls", function() {
+  console.log("Make sure that creds in configForTor.json are valid.");
+
+  const optionsForConnection = require("./configForTor.json");
+  const torControlsWithoutPersistentConnection = createTorControls(optionsForConnection);
+
+  optionsForConnection.isPersistent = true; // ok
+  const torControlsWithPersistentConnection = createTorControls(optionsForConnection);
+
+  it("signals (nonpersistent connection)", createCheckingSendingSignalsFn(torControlsWithoutPersistentConnection));
+  it("signals (persistent connection)", createCheckingSendingSignalsFn(torControlsWithPersistentConnection));
+  it("throwing error", function() {
+    return expect.rejects(function() {
+      return torControlsWithoutPersistentConnection.getInfo("signal noSuchCommandInSpec");
+    }, TorControlRequestError);
+  });
 });
-
-tester.addTest(createCheckingSendingSignalsFn(torControlsWithPersistentConnection), {
-  name: "testSignalsWithPersistentConnection"
-});
-
-const testThrowingError = function() {
-  return expect.rejects(function() {
-    return torControlsWithoutPersistentConnection.getInfo("signal noSuchCommandInSpec");
-  }, TorControlRequestExeption);
-};
-
-tester.addTest(testThrowingError);
-
-tester.onAllTestsEnded.addListener(function() {
-  return torControlsWithPersistentConnection.close();
-});
-
-console.log("Make sure that creds in configForTor.json are valid.");
-
-tester.run();
