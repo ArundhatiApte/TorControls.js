@@ -1,13 +1,8 @@
 #!/bin/sh
 
-rm TorControls.package.zip
+rm TorControls.package.tar.gz
 
-zip -r TorControls.package.zip . \
-  -x node_modules/\*\
-  -x doc/\*\
-  -x .git/\*\
-  -x examples/\*\
-  -x *test\*\
-  -x ".gitignore"\
-  -x *test/\*\
-  -x "createPackage.sh"
+tar -czvf TorControls.package.tar.gz \
+  --exclude='test*'\
+  --exclude='tests.js'\
+  LICENCE package.json README.md src
