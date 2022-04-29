@@ -9,7 +9,7 @@ const TorControls = class {
       this._setupByConfig(options) :
       this._setupByDefault();
   }
-  
+
   _setupByConfig(config) {
     this[_paramsForConnecting] = {
       port: config.port || defaultPort,
@@ -17,7 +17,7 @@ const TorControls = class {
     };
     this[_password] = config.password || defaultPassword;
   }
-  
+
   _setupByDefault() {
     this[_paramsForConnecting] = {
       port: defaultPort,
@@ -25,95 +25,105 @@ const TorControls = class {
     };
     this[_password] = defaultPassword;
   }
-  
+
   _createConnectionToTorControlPort() {
     return createConnectionToTorControlPort(
       this[_paramsForConnecting],
       this[_password]
     );
   }
-  
-  //async _sendRequest(command) {}
-  
+
+  //async _sendRequest(command, willKeepConnection) {}
+
   signal(nameOfSignal) {
     return this._sendRequest("SIGNAL " + nameOfSignal);
   }
-  
+
   mapAddress(address) {
     return this._sendRequest("MAPADDRESS " + address);
   }
-  
+
   getInfo(request) {
-    return this._sendRequest(
-      "GETINFO " + 
-      (typeof request === "string" ? request : request.join("\n"))
-    );
+    return this._sendRequest("GETINFO " + (typeof request === "string" ? request : request.join("\n")));
+  }
+
+  // signals
+  signalClearDNSCache() {
+    return this.signal("CLEARDNSCACHE");
+  }
+
+  signalDebug() {
+    return this.signal("DEBUG");
+  }
+
+  signalDump() {
+    return this.signal("DUMP");
+  }
+
+  signalHalt() {
+    return this.signal("HALT");
+  }
+
+  signalHup() {
+    return this.signal("HUP");
+  }
+
+  signalInt() {
+    return this.signal("INT");
+  }
+
+  signalNewNym() {
+    return this.signal("NEWNYM");
+  }
+
+  signalReload() {
+    return this.signal("RELOAD", true);
+  }
+
+  signalShutdown() {
+    return this.signal("SHUTDOWN", true);
+  }
+
+  signalTerm() {
+    return this.signal("TERM", true);
+  }
+
+  signalUsr1() {
+    return this.signal("USR1");
+  }
+  //
+
+  getConf(request) { // Chapter 3.3
+    return this._sendRequest("GETCONF " + request);
+  }
+
+  getEvents(request) { // Chapter 3.4
+    return this._sendRequest("GETEVENTS " + request);
+  }
+
+  resetConf(request) { // Chapter 3.2
+    return this._sendRequest("RESETCONF " + request);
+  }
+
+  saveConf(request) { // Chapter 3.6
+    return this._sendRequest("SAVECONF " + request);
+  }
+
+  setConf(request) { // Chapter 3.1
+    return this._sendRequest("SETCONF " + request);
   }
 };
 
-const defaultPort = 9051,
-      defaultHost = "localhost",
-      defaultPassword = "",
-      defaultMaxTimeMSForWaitingClosingConnection = 444;
+const defaultPort = 9051;
+const defaultHost = "localhost";
+const defaultPassword = "";
+const defaultMaxTimeMsForWaitingClosingConnection = 444;
 
-const _connection = "_c",
-      _paramsForConnecting = "_p",
-      _password = "_s";
+const _connection = Symbol();
+const _paramsForConnecting = Symbol();
+const _password = Symbol();
 
-
-TorControls._defaultMaxTimeMSForWaitingClosingConnection = defaultMaxTimeMSForWaitingClosingConnection;
+TorControls._defaultMaxTimeMsForWaitingClosingConnection = defaultMaxTimeMsForWaitingClosingConnection;
 TorControls._namesOfPrivateProperties = {_connection};
-
-const proto = TorControls.prototype;
-
-(function addMethodsToTorControls(proto) {
-  
-  const namesOfMethods = [
-    "setConf", "resetConf", 
-    "getConf", "getEvents",
-    "saveConf"
-  ];
-  
-  const createSendingRequestMethod = function(prefixOfCommand) {
-    return function(restPartOfCommand) {
-      return this._sendRequest(prefixOfCommand + restPartOfCommand);
-    };
-  };
-  
-  let request;
-  for (const nameOfMethod of namesOfMethods) {
-    request = nameOfMethod.toUpperCase() + " ";
-    proto[nameOfMethod] = createSendingRequestMethod(request);
-  }
-})(proto);
-
-(function addSendingSignalMethodsToControls(proto) {
-
-  const namesOfMethods = [
-    "signalReload", "signalHup", 
-    "signalShutdown", "signalDump",
-    "signalUsr1", "signalDebug",
-    "signalUsr2", "signalHalt",
-    "signalTerm", "signalInt",
-    "signalNewNym", "signalClearDNSCache"
-  ];
-    
-  const createSendingSignalMethod = function(nameOfSignal) {
-    return function() {
-      return this.signal(nameOfSignal);
-    };
-  };
-  
-  const lengthOfSignalWord = "signal".length;
-  const extractNameOfSignalFromNameOfMethod = function(nameOfMethod) {
-    return nameOfMethod.slice(lengthOfSignalWord).toUpperCase();
-  };
-  
-  let nameOfSignal;
-  for (const nameOfMethod of namesOfMethods) {
-    nameOfSignal = extractNameOfSignalFromNameOfMethod(nameOfMethod);
-    proto[nameOfMethod] = createSendingSignalMethod(nameOfSignal);
-  }
-})(proto);
 
 module.exports = TorControls;

@@ -1,15 +1,15 @@
 "use strict";
 
-const TorControls = require("./TorControls"),
-      sendCommandToTorControl = require("./../modules/sendCommandToTorControl"),
-      closeConnectionToTorControlPort = require("./../modules/closeConnectionToTorControlPort");
+const TorControls = require("./TorControls");
+const sendCommandToTorControl = require("./../modules/sendCommandToTorControl");
+const closeConnectionToTorControlPort = require("./../modules/closeConnectionToTorControlPort");
 
-const {_connection} = TorControls._namesOfPrivateProperties,
-      defaultMaxTimeMSForWaitingClosingConnection = TorControls._defaultMaxTimeMSForWaitingClosingConnection;
+const {_connection} = TorControls._namesOfPrivateProperties;
+const defaultMaxTimeMsForWaitingClosingConnection = TorControls._defaultMaxTimeMsForWaitingClosingConnection;
 
 const TorControlsWithPersistentConnection = class extends TorControls {
   async close() {
-    await closeConnectionToTorControlPort(this[_connection], defaultMaxTimeMSForWaitingClosingConnection); 
+    await closeConnectionToTorControlPort(this[_connection], defaultMaxTimeMsForWaitingClosingConnection);
     delete this[_connection];
   }
 
