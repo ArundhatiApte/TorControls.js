@@ -22,7 +22,6 @@ const createCheckingSendingSignalsFn = (function() {
 
     const checkSendingSignalByMethod = async function(torControls, nameOfMethod) {
       const result = await torControls[nameOfMethod]();
-      console.log("result from ", nameOfMethod, " : ", result);
     };
 
     return checkSengingSignals;
@@ -50,5 +49,9 @@ describe("testing TorControls", function() {
     return expect.rejects(function() {
       return torControlsWithoutPersistentConnection.getInfo("signal noSuchCommandInSpec");
     }, TorControlRequestError);
+  });
+
+  after(function() {
+    return torControlsWithPersistentConnection.destroy();
   });
 });
