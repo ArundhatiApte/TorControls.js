@@ -9,7 +9,7 @@ const defaultMaxTimeMsForWaitingClosingConnection = TorControls._defaultMaxTimeM
 
 const TorControlsWithoutPersistentConnection = class extends TorControls {
   async _sendRequest(command, willKeepConnection) {
-    const connection = await this._createConnectionToTorControlPort();
+    const connection = this[_connection] || (await this._createConnectionToTorControlPort());
 
     let result, error;
     try {
