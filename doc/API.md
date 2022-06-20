@@ -28,7 +28,7 @@ By default: `false`.
 
 ### class: TorControlRequestError
 
-- Extends `<Error>`.
+- Extends `<Error>`
 
 #### message
 
@@ -56,15 +56,15 @@ Provides methods for sending signals and requests to TOR service.
 Every method has no argumens, returns `<Promise<TorControlResponse>>`.
 If TOR service send message with error code, `<Promise>` will be rejected with `<TorControlRequestError>`.
 
-#### getConf(nameOfProperty)
+#### getConf(request)
 
-#### getEvents()
+#### getEvents(request)
 
-#### resetConf()
+#### resetConf(request)
 
-#### saveConf()
+#### saveConf(request)
 
-#### setConf()
+#### setConf(request)
 
 #### _sendRequest(message)
 
@@ -73,8 +73,9 @@ If TOR service send message with error code, `<Promise>` will be rejected with `
 
 Private method for sending requests to TOR service.
 If TOR service send message with error code, `<Promise>` will be rejected with `<TorControlRequestError>`.  
-Use this function to implement missing method in TorControl class.
+Use this function to implement missing method in TorControl class.  
 Example:
+
 ```js
 const customRequest = "..."
 const sendCustomResuest = (torControls) => torControls._sendRequest(customRequest)
@@ -110,6 +111,6 @@ Closes connection to TOR service, by `socket.end()` method, without sending mess
 
 ### class: TempConnectionTorControl
 
-- Extends `<TorControl>`.
+- Extends `<TorControl>`
 
 Objects of the TempConnectionTorControl class, establish connection for every requests.

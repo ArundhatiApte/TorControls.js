@@ -1,4 +1,4 @@
-## Содержание
+﻿s## Содержание
 
 - [Экспортируемый модуль](#экспортируемый-модуль)
 - [Класс TorControl](#torcontrol)
@@ -19,7 +19,7 @@
     - `host <string>` По умолчанию "localhost".
     - `isPersistent <bool>`  
 Указывает использовать ли одно соединение с сервисом TOR для всех запросов, или устанавливать новое для каждого нового сообщения.
-Если занчение истина функция `createTorControls` вернет объект класса `<PersistentConnectionTorControl>`, иначе
+Если значение истина функция `createTorControls` вернет объект класса `<PersistentConnectionTorControl>`, иначе
 `<TempConnectionTorControl>`. По умолчанию `false`.
     - `password <string>` Пароль для подключения к сервису TOR. По умолчанию "".
     - `port <number>` Порт управления сервисом TOR. По умолчанию 9051.
@@ -27,7 +27,7 @@
 
 ### class: TorControlRequestError
 
-- Наследует `<Error>`.
+- Наследует `<Error>`
 
 #### message
 
@@ -55,11 +55,15 @@
 Каждый метод без параметров, возвращает `<Promise<TorControlResponse>>`.
 Если сервис TOR ответит сообщение с кодом ошибки, метод завершится исключением TorControlRequestError.
 
-#### getConf()
-#### getEvents()
-#### resetConf()
-#### saveConf()
-#### setConf()
+#### getConf(request)
+
+#### getEvents(request)
+
+#### resetConf(request)
+
+#### saveConf(request)
+
+#### setConf(request)
 
 #### _sendRequest(message)
 
@@ -67,8 +71,9 @@
 - Возвращает `<Promise>`
 
 Частный метод для отправки сообщений сервису TOR. Если сервис TOR ответит сообщение с кодом ошибки, метод завершится исключением TorControlRequestError.  
-Используйте, если нужный метод отсутсвует в классе TorControl.  
+Используйте, если нужный метод отсутствует в классе TorControl.  
 Пример:
+
 ```js
 const customRequest = "..."
 const sendCustomeResuest = (torControls) => torControls._sendRequest(customRequest)
@@ -96,7 +101,7 @@ const sendCustomeResuest = (torControls) => torControls._sendRequest(customReque
 
 - Возвращает `<Promise>`
 
-Закрывает соединеие с сервисом TOR, отправляя сообщение `"QUIT\r\n"`.
+Закрывает соединение с сервисом TOR, отправляя сообщение `"QUIT\r\n"`.
 
 #### destroy()
 
@@ -104,6 +109,6 @@ const sendCustomeResuest = (torControls) => torControls._sendRequest(customReque
 
 ### Класс: TempConnectionTorControl
 
-- Наследует `<TorControl>`.
+- Наследует `<TorControl>`
 
-Объекты класса устанавливают соединение с сервисом TOR для кажого запроса.
+Объекты класса устанавливают соединение с сервисом TOR для каждого запроса.

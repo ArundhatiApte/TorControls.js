@@ -4,8 +4,10 @@ Module for managing TOR service.
 
 ### Installation
 
-Download repo. In root folder of project execute script createPackage.sh.
-In folder of your project install module by package manager: `npm install path/to/TorControls.package.tar.gz`.
+Download repo. Cd to project folder, then execute script createPackage.sh.
+There will be file TorControls.package.tar.gz.
+In directory of your project install module by package manager:
+`npm install path/to/TorControls.package.tar.gz`.
 
 ### Example of usage
 
@@ -36,10 +38,3 @@ const torControls = createTorControls({
 ### License
 
 [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0)
-
-### Support
-
-- Bitcoin Cash: qq0j7w2nvjvtk6r5pxux8d3ekse6kqz44qxxr7ayw6
-- Ethereum: 0x6987e6De173C0f055B7039B314f2cedbFDA33582
-- Litecoin: ltc1qtc8mh6lhv038tsm9z5y9jfxdtk5rlr6ueuc78u
-- Polkadot: 1RMn2ThRFfz2kdkR3eqoAmaQFHT9yQVHYrhPdcKVNpzz9bU
