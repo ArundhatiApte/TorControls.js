@@ -4,7 +4,7 @@ Module for managing TOR service.
 
 ### Installation
 
-Download repo. Cd to project folder, then execute script createPackage.sh.
+Download repo. Goto to project/buildingNpmPackage folder, then execute script createPackage.sh.
 There will be file TorControls.package.tar.gz.
 In directory of your project install module by package manager:
 `npm install path/to/TorControls.package.tar.gz`.
