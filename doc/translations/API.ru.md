@@ -1,23 +1,24 @@
-﻿s## Содержание
+﻿# API TorControls
+
+####  Содержание
 
 - [Экспортируемый модуль](#экспортируемый-модуль)
 - [Класс TorControl](#torcontrol)
-- [Класс TorControlResponse](#torcontrolresponse)
 - [Класс TorControlRequestError](#torcontrolrequestexeption)
 - [Класс PersistentConnectionTorControl](#persistentconnectiontorcontrol)
 - [Класс TempConnectionTorControl](#tempconnectiontorcontrol)
 
-### Экспортируемый модуль
+## Экспортируемый модуль
 
 `<Object>`
 - `createTorControls([options])`
 - `TorControlRequestError`
 
-#### createTorControls([options])
+### createTorControls([options])
 
 - `options <Object>`
     - `host <string>` По умолчанию "localhost".
-    - `isPersistent <bool>`  
+    - `isPersistent <bool>`
 Указывает использовать ли одно соединение с сервисом TOR для всех запросов, или устанавливать новое для каждого нового сообщения.
 Если значение истина функция `createTorControls` вернет объект класса `<PersistentConnectionTorControl>`, иначе
 `<TempConnectionTorControl>`. По умолчанию `false`.
@@ -25,53 +26,59 @@
     - `port <number>` Порт управления сервисом TOR. По умолчанию 9051.
 - Возвращает `<TorControl>`
 
-### class: TorControlRequestError
+## class: TorControlRequestError
 
 - Наследует `<Error>`
 
-#### message
+### message
 
 - `<string>` Ответное сообщение сервиса TOR. Пример: `'552/\r?\n/Unrecognized key "noSuchCommandInSpec"'`.
 
-### Класс: TorControl
+## Класс: TorControl
 
-Предоствляет методы для отправки сигналов и запросов сервису TOR.
+Предоставляет методы для отправки сигналов и запросов сервису TOR.
 
-#### Методы, отправляющие сигналы:
+### Методы, отправляющие сигналы:
 
-- signalClearDNSCache
-- signalDebug
-- signalDump
-- signalHalt
-- signalHup
-- signalInt
-- signalNewNym
-- signalReload
-- signalShutdown
-- signalTerm
-- signalUsr1
-- signalUsr2
+- signalClearDNSCache()
+- signalDebug()
+- signalDump()
+- signalHalt()
+- signalHup()
+- signalInt()
+- signalNewNym()
+- signalReload()
+- signalShutdown()
+- signalTerm()
+- signalUsr1()
+- signalUsr2()
 
-Каждый метод без параметров, возвращает `<Promise<TorControlResponse>>`.
-Если сервис TOR ответит сообщение с кодом ошибки, метод завершится исключением TorControlRequestError.
+Каждый метод без параметров, возвращает `<Promise<string>>`, который в случае успеха будет содержать ответное
+сообщение. Если сервис TOR ответит сообщение с кодом ошибки, `Promise` завершится исключением
+`TorControlRequestError`.
 
-#### getConf(request)
+### Другие методы
 
-#### getEvents(request)
+- setConf(request) Глава 3.1 в [TOR Control spec]
+- resetConf(request) Глава 3.2 в [TOR Control spec]
+- getConf(request) Глава 3.3 в [TOR Control spec]
+- getEvents(request) Глава 3.4 в [TOR Control spec]
+- saveConf(request) Глава 3.6 в [TOR Control spec]
 
-#### resetConf(request)
+- `request <string>`
+- Возвращает `<Promise<string>>`
 
-#### saveConf(request)
+В случае успеха `Promise` будет содержать ответное сообщение.
+Если сервис TOR ответит сообщением с кодом ошибки, метод завершится исключением `TorControlRequestError`.
 
-#### setConf(request)
-
-#### _sendRequest(message)
+### _sendRequest(message)
 
 - `message <string>` Сообщение, отправляемое сервису TOR.
-- Возвращает `<Promise>`
+- Возвращает `<Promise<string>>`
 
-Частный метод для отправки сообщений сервису TOR. Если сервис TOR ответит сообщение с кодом ошибки, метод завершится исключением TorControlRequestError.  
-Используйте, если нужный метод отсутствует в классе TorControl.  
+Защищённый метод для отправки сообщений сервису TOR. Если сервис TOR ответит сообщение с кодом ошибки,
+`Promise` завершится исключением `TorControlRequestError`. Используйте, если нужный метод отсутствует в классе
+`TorControl`.
 Пример:
 
 ```js
@@ -79,36 +86,26 @@ const customRequest = "..."
 const sendCustomeResuest = (torControls) => torControls._sendRequest(customRequest)
 ```
 
-### Класс: TorControlResponse
+## Класс: PersistentConnectionTorControl
 
-Информация об ответе сервиса TOR.
-
-#### code
-
-- `<number>` Код результата запроса.
-
-####  message
-
-`<string>` Ответное сообщение.
-
-### Класс: PersistentConnectionTorControl
-
-- Наследует `<TorControl>`.
+- Наследует `<TorControl>`
 
 Объекты класса удерживают одно соединение с сервисом TOR на протяжении всех запросов.
 
-#### close()
+### close()
 
 - Возвращает `<Promise>`
 
 Закрывает соединение с сервисом TOR, отправляя сообщение `"QUIT\r\n"`.
 
-#### destroy()
+### destroy()
 
 Закрывает соединеие с сервисом TOR, методом `socket.end()`, без отправки сообщения `"QUIT\r\n"`.
 
-### Класс: TempConnectionTorControl
+## Класс: TempConnectionTorControl
 
 - Наследует `<TorControl>`
 
 Объекты класса устанавливают соединение с сервисом TOR для каждого запроса.
+
+[TOR Control spec]: https://github.com/torproject/torspec/blob/main/control-spec.txt

@@ -1,6 +1,6 @@
 ﻿## TorControls
 
-Модуль для управления сервисом TOR. 
+Модуль для управления сервисом TOR.
 
 ### Установка
 
@@ -21,13 +21,14 @@ import {createTorControls} from "TorControls";
 const torControls = createTorControls({
   host: "localhost",
   password: "some password1234",
-  port: 9991
+  port: 9991,
+  isPersistent: true
 });
 
 (async () => {
   await torControls.signalNewNym();
-  const {message} = await torControls.getConf("SocksPort");
-  console.log(message);
+  const response = await torControls.getConf("SocksPort");
+  console.log(response);
 })();
 ```
 
