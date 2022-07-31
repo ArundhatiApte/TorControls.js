@@ -33,7 +33,7 @@ const TorControls = class {
     );
   }
 
-  //async _sendRequest(command, willKeepConnection) {}
+  //async _sendRequest(command) {}
 
   signal(nameOfSignal) {
     return this._sendRequest("SIGNAL " + nameOfSignal);
@@ -124,6 +124,6 @@ const _paramsForConnecting = Symbol();
 const _password = Symbol();
 
 TorControls._defaultMaxTimeMsForWaitingClosingConnection = defaultMaxTimeMsForWaitingClosingConnection;
-TorControls._namesOfPrivateProperties = {_connection};
+TorControls._namesOfProtectedProperties = {_connection};
 
 module.exports = TorControls;

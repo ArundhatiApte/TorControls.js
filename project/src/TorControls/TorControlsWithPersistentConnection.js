@@ -4,7 +4,7 @@ const TorControls = require("./TorControls");
 const sendCommandToTorControl = require("./../modules/sendCommandToTorControl");
 const closeConnectionToTorControlPort = require("./../modules/closeConnectionToTorControlPort");
 
-const {_connection} = TorControls._namesOfPrivateProperties;
+const {_connection} = TorControls._namesOfProtectedProperties;
 const defaultMaxTimeMsForWaitingClosingConnection = TorControls._defaultMaxTimeMsForWaitingClosingConnection;
 
 const TorControlsWithPersistentConnection = class extends TorControls {

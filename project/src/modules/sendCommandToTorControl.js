@@ -9,21 +9,19 @@ const sendCommandToTorControl = function(connection, command) {
   });
 };
 
+const newLine = "\r\n";
+
 const acceptResponse = function(resolvePromise, rejectPromise, response) {
   response = response.toString();
 
   if (is250SuccesCode(response)) {
-    return resolvePromise({
-      code: 250,
-      message: response
-    });
+    return resolvePromise(response);
   }
   return rejectPromise(new TorControlRequestError(response));
 };
 
-const reSuccesResponse = /250/,
-      newLine = "\r\n";
-
-const is250SuccesCode = reSuccesResponse.test.bind(reSuccesResponse);
+const is250SuccesCode = function(stringResponse) {
+  return stringResponse.startsWith("250");
+};
 
 module.exports = sendCommandToTorControl;

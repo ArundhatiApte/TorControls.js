@@ -45,13 +45,15 @@ describe("testing TorControls", function() {
 
   it("signals (nonpersistent connection)", createCheckingSendingSignalsFn(torControlsWithoutPersistentConnection));
   it("signals (persistent connection)", createCheckingSendingSignalsFn(torControlsWithPersistentConnection));
+
   it("throwing error", function() {
-    return expect.rejects(function() {
-      return torControlsWithoutPersistentConnection.getInfo("signal noSuchCommandInSpec");
-    }, TorControlRequestError);
+    return expect.rejects(
+      () => torControlsWithoutPersistentConnection.getInfo("signal noSuchCommandInSpec"),
+      TorControlRequestError
+    );
   });
 
-  after(function() {
+  after(function closeConnection() {
     return torControlsWithPersistentConnection.destroy();
   });
 });
